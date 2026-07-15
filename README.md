@@ -1,5 +1,6 @@
 # gcp-protocol
 Web3 Groundwater Commons Protocol (GCP)
+
 # Groundwater Commons Protocol (GCP)
 
 A Web3 + AI system for sustainable groundwater management.
