@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract CreditToken {
+    mapping(address => uint256) public balance;
+
+    event Mint(address to, uint256 amount);
+
+    function mint(address to, uint256 amount) external {
+        balance[to] += amount;
+        emit Mint(to, amount);
+    }
+}
