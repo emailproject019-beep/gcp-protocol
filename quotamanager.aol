@@ -1,0 +1,27 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "./ResourceRegistry.sol";
+
+contract QuotaManager {
+    ResourceRegistry registry;
+
+    mapping(uint256 => uint256) public usedQuota;
+
+    event ExtractionLogged(uint256 id, uint256 amount);
+
+    constructor(address registryAddress) {
+        registry = ResourceRegistry(registryAddress);
+    }
+
+    function logExtraction(uint256 id, uint256 amount) external {
+        (, address owner, uint256 maxQuota, bool exists) = registry.resources(id);
+        require(exists, "Resource not found");
+        require(msg.sender == owner, "Not resource owner");
+
+        usedQuota[id] += amount;
+        require(usedQuota[id] <= maxQuota, "Quota exceeded");
+
+        emit ExtractionLogged(id, amount);
+    }
+}
